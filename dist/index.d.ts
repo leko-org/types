@@ -1,6 +1,7 @@
-import { InferModel } from 'drizzle-orm';
+import * as drizzle_orm_query_promise_d_d7b61248 from 'drizzle-orm/query-promise.d-d7b61248';
 import * as drizzle_orm_db_d_a6fe1b19 from 'drizzle-orm/db.d-a6fe1b19';
 import * as drizzle_orm_pg_core from 'drizzle-orm/pg-core';
+import { InferModel } from 'drizzle-orm';
 
 declare const users: drizzle_orm_db_d_a6fe1b19.au<{
     name: "users";
@@ -292,16 +293,76 @@ declare const folder: drizzle_orm_db_d_a6fe1b19.au<{
         }>;
     };
 }>;
-
+declare const tagsToDocument: drizzle_orm_db_d_a6fe1b19.au<{
+    name: "tags_to_document";
+    schema: undefined;
+    columns: {
+        documentId: drizzle_orm_pg_core.PgInteger<{
+            tableName: "tags_to_document";
+            name: "document_id";
+            data: number;
+            driverParam: string | number;
+            hasDefault: false;
+            notNull: false;
+        }>;
+        tagId: drizzle_orm_pg_core.PgInteger<{
+            tableName: "tags_to_document";
+            name: "tag_id";
+            data: number;
+            driverParam: string | number;
+            hasDefault: false;
+            notNull: false;
+        }>;
+    };
+}>;
+declare const tagsToFolders: drizzle_orm_db_d_a6fe1b19.au<{
+    name: "tags_to_folder";
+    schema: undefined;
+    columns: {
+        folderId: drizzle_orm_pg_core.PgInteger<{
+            tableName: "tags_to_folder";
+            name: "folder_id";
+            data: number;
+            driverParam: string | number;
+            hasDefault: false;
+            notNull: false;
+        }>;
+        tagId: drizzle_orm_pg_core.PgInteger<{
+            tableName: "tags_to_folder";
+            name: "tag_id";
+            data: number;
+            driverParam: string | number;
+            hasDefault: false;
+            notNull: false;
+        }>;
+    };
+}>;
+declare const usersRelations: drizzle_orm_query_promise_d_d7b61248.z<"users", {
+    role: drizzle_orm_query_promise_d_d7b61248.O<"role", true>;
+    tagset: drizzle_orm_query_promise_d_d7b61248.M<"tagset">;
+}>;
+declare const tagsetRelations: drizzle_orm_query_promise_d_d7b61248.z<"tagset", {
+    tags: drizzle_orm_query_promise_d_d7b61248.M<"tag">;
+}>;
+declare const documentsRelation: drizzle_orm_query_promise_d_d7b61248.z<"documents", {
+    owner: drizzle_orm_query_promise_d_d7b61248.O<"users", false>;
+    tags: drizzle_orm_query_promise_d_d7b61248.M<"tag">;
+    folder: drizzle_orm_query_promise_d_d7b61248.O<"folder", false>;
+}>;
+declare const folderRelations: drizzle_orm_query_promise_d_d7b61248.z<"documents", {
+    owner: drizzle_orm_query_promise_d_d7b61248.O<"users", false>;
+    documents: drizzle_orm_query_promise_d_d7b61248.M<"documents">;
+}>;
 type User = InferModel<typeof users>;
 type Document = InferModel<typeof document>;
 type Folder = InferModel<typeof folder>;
 type Role = InferModel<typeof role>;
 type Tag = InferModel<typeof tag>;
 type Tagset = InferModel<typeof tagset>;
+
 type Test = {
     name: string;
     id: number;
 };
 
-export { Document, Folder, Role, Tag, Tagset, Test, User };
+export { Document, Folder, Role, Tag, Tagset, Test, User, document, documentsRelation, folder, folderRelations, role, tag, tagsToDocument, tagsToFolders, tagset, tagsetRelations, users, usersRelations };

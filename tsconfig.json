@@ -8,6 +8,8 @@
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
     "noEmit": true,
-    "outDir": "./lib/"
+    "outDir": "./lib/",
+    "declaration": true,
+    "declarationDir": "./types"
   }
 }
