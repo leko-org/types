@@ -1,5 +1,11 @@
 # @leko-org/types
 
+## 0.4.0
+
+### Minor Changes
+
+- 12f3ed7: Changed package.json
+
 ## 0.3.0
 
 ### Minor Changes
