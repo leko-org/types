@@ -1,0 +1,4 @@
+{
+  "schema": "./main.ts",
+  "out": "./drizzle"
+}
