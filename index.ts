@@ -11,7 +11,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { InferModel, relations } from "drizzle-orm";
 
-export const users = pgTable(
+const users = pgTable(
   "users",
   {
     id: serial("id").primaryKey(),
@@ -43,11 +43,11 @@ export const users = pgTable(
   }
 );
 
-export const role = pgTable("role", {
+const role = pgTable("role", {
   id: serial("id").primaryKey(),
 });
 
-export const tag = pgTable(
+const tag = pgTable(
   "tag",
   {
     id: serial("id").primaryKey(),
@@ -60,13 +60,13 @@ export const tag = pgTable(
   }
 );
 
-export const tagset = pgTable("tagset", {
+const tagset = pgTable("tagset", {
   id: serial("id").primaryKey(),
 
   tags: integer("tags").references(() => tag.id),
 });
 
-export const document = pgTable("documents", {
+const document = pgTable("documents", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 100 }).notNull(),
   content: text("content"),
@@ -77,19 +77,19 @@ export const document = pgTable("documents", {
   owner: integer("owner").references(() => users.id),
 });
 
-export const folder = pgTable("folder", {
+const folder = pgTable("folder", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 100 }).notNull(),
 
   owner: integer("owner").references(() => users.id),
 });
 
-export const tagsToDocument = pgTable("tags_to_document", {
+const tagsToDocument = pgTable("tags_to_document", {
   documentId: integer("document_id").references(() => document.id),
   tagId: integer("tag_id").references(() => tag.id),
 });
 
-export const tagsToFolders = pgTable(
+const tagsToFolders = pgTable(
   "tags_to_folder",
   {
     folderId: integer("folder_id").references(() => folder.id),
@@ -101,22 +101,22 @@ export const tagsToFolders = pgTable(
 );
 
 // Relation mapping
-export const usersRelations = relations(users, ({ one, many }) => ({
+const usersRelations = relations(users, ({ one, many }) => ({
   role: one(role, { fields: [users.role], references: [role.id] }),
   tagset: many(tagset),
 }));
 
-export const tagsetRelations = relations(tagset, ({ many }) => ({
+const tagsetRelations = relations(tagset, ({ many }) => ({
   tags: many(tag),
 }));
 
-export const documentsRelation = relations(document, ({ one, many }) => ({
+const documentsRelation = relations(document, ({ one, many }) => ({
   owner: one(users, { fields: [document.owner], references: [users.id] }),
   tags: many(tag),
   folder: one(folder, { fields: [document.folder], references: [folder.id] }),
 }));
 
-export const folderRelations = relations(document, ({ one, many }) => ({
+const folderRelations = relations(document, ({ one, many }) => ({
   owner: one(users, { fields: [document.owner], references: [users.id] }),
   documents: many(document),
 }));
@@ -127,6 +127,20 @@ export type Folder = InferModel<typeof folder>;
 export type Role = InferModel<typeof role>;
 export type Tag = InferModel<typeof tag>;
 export type Tagset = InferModel<typeof tagset>;
+export {
+  document,
+  folder,
+  tagsToDocument,
+  tagsToFolders,
+  users,
+  role,
+  tag,
+  tagset,
+  usersRelations,
+  tagsetRelations,
+  documentsRelation,
+  folderRelations,
+};
 
 export type Test = {
   name: string;

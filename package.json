@@ -2,8 +2,8 @@
   "name": "@leko-org/types",
   "version": "0.3.0",
   "description": "",
-  "main": "./lib/main.js",
-  "types": "./lib/main.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "generate": "npx drizzle-kit generate:pg",
     "build": "tsup index.ts --format cjs,esm --dts",
