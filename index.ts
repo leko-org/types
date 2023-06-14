@@ -1,5 +1,5 @@
 import { InferModel } from "drizzle-orm";
-import { users, document, folder, role, tag, tagset } from "./dist";
+import { users, document, folder, role, tag, tagset } from "./schema";
 
 export type User = InferModel<typeof users>;
 export type Document = InferModel<typeof document>;
